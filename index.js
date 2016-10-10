@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 
 const { GoogleVRPanoramaManager } = NativeModules;
+const { inputType } = GoogleVRPanoramaManager;
 
 class PanoramaView extends React.Component {
   constructor(props) {
@@ -24,13 +25,22 @@ class PanoramaView extends React.Component {
 
 PanoramaView.propTypes = {
   ...View.propTypes,
-  image: React.PropTypes.string,
+
+  imageUrl: React.PropTypes.string.isRequired,
+  inputType: React.PropTypes.number,
+}
+
+PanoramaView.defaultProps = {
+  inputType: inputType.mono,
 }
 
 const RNGoogleVRPanoramaView = requireNativeComponent('RNGoogleVRPanorama', PanoramaView, {
   nativeOnly: {}
 });
 
-const GoogleVRPanorama = { PanoramaView };
+const GoogleVRPanorama = {
+  PanoramaView,
+  inputType,
+};
 
 module.exports = GoogleVRPanorama;
