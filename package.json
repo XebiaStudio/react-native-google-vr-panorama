@@ -1,0 +1,40 @@
+{
+  "name": "react-native-google-vr-panorama",
+  "version": "1.0.0",
+  "description": "React Native component for the Google VR panorama widget.",
+  "keywords": [
+    "react",
+    "native",
+    "google",
+    "vr",
+    "panorama",
+    "360",
+    "photo",
+    "photosphere",
+    "streetview"
+  ],
+  "main": "index.js",
+  "scripts": {},
+  "contributors": [
+    {
+      "name": "Marc Rooding",
+      "email": "mrooding@xebia.com"
+    },
+    {
+      "name": "Gert Hengeveld",
+      "email": "ghengeveld@xebia.com"
+    }
+  ],
+  "license": "GPL",
+  "homepage": "https://github.com/XebiaStudio/react-native-google-vr-panorama#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XebiaStudio/react-native-google-vr-panorama.git"
+  },
+  "bugs": {
+    "url": "https://github.com/XebiaStudio/react-native-google-vr-panorama/issues"
+  },
+  "devDependencies": {
+    "react-native": "^0.34.1"
+  }
+}
