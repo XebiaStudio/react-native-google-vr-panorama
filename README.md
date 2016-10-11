@@ -1,5 +1,7 @@
 # react-native-google-vr-panorama
-React Native component for the Google VR Panorama Widget (Android only)
+React Native component for the Google VR Panorama Widget
+
+**Note: Required Android 4.4 or higher and at least Android SDK Version 23**
 
 ## Installation 
 
