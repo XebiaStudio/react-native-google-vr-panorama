@@ -60,3 +60,31 @@ protected List<ReactPackage> getPackages() {
     );
 }
 ```
+
+## Usage
+
+Import the package and view:
+
+```
+import GoogleVRPanorama, { PanoramaView } from 'react-native-google-vr-panorama'
+```
+
+Render the view:
+
+```
+render() {
+    const imageUrl = 'http://www.google.com/image.jpg'
+    const inputType = GoogleVRPanorama.inputType.stereo
+    
+    return (
+        <PanoramaView imageUrl={imageUrl} inputType={inputType} />
+    )
+}
+```
+
+## Props
+
+| Prop | Type | Required | Description | Default |
+|---|---|---|---|---|
+| `imageUrl` | `string` | Required | The URL of the image that the component should display | N/A |
+| `inputType` | `number` | Required | The input type for the image. One of `GoogleVRPanorama.inputType.mono`, `GoogleVRPanorama.inputType.stereo` | `GoogleVRPanorama.inputType.mono` |
