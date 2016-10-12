@@ -9,6 +9,12 @@ import android.support.annotation.UiThread;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.RelativeLayout;
+
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
+
 import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView.Options;
@@ -20,6 +26,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class RNGoogleVRPanoramaView extends RelativeLayout {
     private static final String TAG = RNGoogleVRPanoramaView.class.getSimpleName();
@@ -112,14 +120,23 @@ public class RNGoogleVRPanoramaView extends RelativeLayout {
     private class ActivityEventListener extends VrPanoramaEventListener {
         @Override
         public void onLoadSuccess() {
-            loadImageSuccessful = true;
+            emitEvent("onImageLoaded", null);
         }
 
         @Override
         public void onLoadError(String errorMessage) {
-            loadImageSuccessful = false;
-
             Log.e(TAG, "Error loading pano: " + errorMessage);
+
+            emitEvent("onImageLoadingFailed", null);
         }
+    }
+
+    void emitEvent(String name, @Nullable WritableMap event) {
+        if (event == null) {
+            event = Arguments.createMap();
+        }
+        ((ReactContext)getContext())
+                .getJSModule(RCTEventEmitter.class)
+                .receiveEvent(getId(), name, event);
     }
 }

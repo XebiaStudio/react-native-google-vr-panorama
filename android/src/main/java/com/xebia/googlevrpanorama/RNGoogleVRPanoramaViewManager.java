@@ -1,9 +1,14 @@
 package com.xebia.googlevrpanorama;
 
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class RNGoogleVRPanoramaViewManager extends SimpleViewManager<RNGoogleVRPanoramaView> {
     private static final String REACT_CLASS = "RNGoogleVRPanorama";
@@ -21,7 +26,7 @@ public class RNGoogleVRPanoramaViewManager extends SimpleViewManager<RNGoogleVRP
     }
 
     @Override
-    public RNGoogleVRPanoramaView createViewInstance (ThemedReactContext context) {
+    public RNGoogleVRPanoramaView createViewInstance(ThemedReactContext context) {
         return new RNGoogleVRPanoramaView(context, this, context.getCurrentActivity());
     }
 
@@ -29,6 +34,13 @@ public class RNGoogleVRPanoramaViewManager extends SimpleViewManager<RNGoogleVRP
     protected void onAfterUpdateTransaction(RNGoogleVRPanoramaView view) {
         super.onAfterUpdateTransaction(view);
         view.onAfterUpdateTransaction();
+    }
+
+    public @Nullable Map<String, Object> getExportedCustomDirectEventTypeConstants() {
+        return MapBuilder.<String, Object>builder()
+            .put("onImageLoaded", MapBuilder.of("registrationName", "onImageLoaded"))
+            .put("onImageLoadingFailed", MapBuilder.of("registrationName", "onImageLoadingFailed"))
+            .build();
     }
 
     public ReactApplicationContext getContext() {
