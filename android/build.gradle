@@ -45,6 +45,7 @@ dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
 
     compile 'com.facebook.react:react-native:+'
+    compile 'commons-io:commons-io:2.5'
 
     compile(name: 'common', ext: 'aar')
     compile(name: 'commonwidget', ext: 'aar')

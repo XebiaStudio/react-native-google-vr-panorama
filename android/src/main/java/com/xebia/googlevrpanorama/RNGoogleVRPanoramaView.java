@@ -19,6 +19,7 @@ import com.google.vr.sdk.widgets.pano.VrPanoramaEventListener;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView;
 import com.google.vr.sdk.widgets.pano.VrPanoramaView.Options;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -29,6 +30,8 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.io.IOUtils;
+
 public class RNGoogleVRPanoramaView extends RelativeLayout {
     private static final String TAG = RNGoogleVRPanoramaView.class.getSimpleName();
 
@@ -37,13 +40,13 @@ public class RNGoogleVRPanoramaView extends RelativeLayout {
     private Activity _activity;
 
     private VrPanoramaView panoWidgetView;
-
-    private boolean loadImageSuccessful;
-
     private Map<URL, Bitmap> imageCache = new HashMap<>();
-    private URL imageUrl;
-    private Options panoOptions = new Options();
     private ImageLoaderTask imageLoaderTask;
+    private Options panoOptions = new Options();
+
+    private URL imageUrl;
+    private int imageWidth;
+    private int imageHeight;
 
     @UiThread
     public RNGoogleVRPanoramaView(Context context, RNGoogleVRPanoramaViewManager manager, Activity activity) {
@@ -76,6 +79,11 @@ public class RNGoogleVRPanoramaView extends RelativeLayout {
         } catch(MalformedURLException e) {}
     }
 
+    public void setDimensions(int width, int height) {
+        this.imageWidth = width;
+        this.imageHeight = height;
+    }
+
     public void setInputType(int value) {
         if (panoOptions.inputType == value) { return; }
         panoOptions.inputType = value;
@@ -96,7 +104,7 @@ public class RNGoogleVRPanoramaView extends RelativeLayout {
 
                     istr = connection.getInputStream();
 
-                    imageCache.put(imageUrl, BitmapFactory.decodeStream(istr));
+                    imageCache.put(imageUrl, decodeSampledBitmap(istr));
                 } catch (IOException e) {
                     Log.e(TAG, "Could not load file: " + e);
                     return false;
@@ -114,6 +122,52 @@ public class RNGoogleVRPanoramaView extends RelativeLayout {
             panoWidgetView.loadImageFromBitmap(image, panoOptions);
 
             return true;
+        }
+
+        private Bitmap decodeSampledBitmap(InputStream inputStream) throws IOException {
+            final byte[] bytes = getBytesFromInputStream(inputStream);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+
+            if(imageWidth != 0 && imageHeight != 0) {
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+
+                options.inSampleSize = calculateInSampleSize(options, imageWidth, imageHeight);
+                options.inJustDecodeBounds = false;
+            }
+
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        }
+
+        private byte[] getBytesFromInputStream(InputStream inputStream) throws IOException {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            IOUtils.copy(inputStream, baos);
+
+            return baos.toByteArray();
+        }
+
+        private int calculateInSampleSize(
+                BitmapFactory.Options options, int reqWidth, int reqHeight) {
+            // Raw height and width of image
+            final int height = options.outHeight;
+            final int width = options.outWidth;
+            int inSampleSize = 1;
+
+            if (height > reqHeight || width > reqWidth) {
+
+                final int halfHeight = height / 2;
+                final int halfWidth = width / 2;
+
+                // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+                // height and width larger than the requested height and width.
+                while ((halfHeight / inSampleSize) > reqHeight
+                        && (halfWidth / inSampleSize) > reqWidth) {
+                    inSampleSize *= 2;
+                }
+            }
+
+            return inSampleSize;
         }
     }
 

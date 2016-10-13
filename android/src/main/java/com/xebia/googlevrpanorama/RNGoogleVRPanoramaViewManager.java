@@ -2,6 +2,7 @@ package com.xebia.googlevrpanorama;
 
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -50,6 +51,13 @@ public class RNGoogleVRPanoramaViewManager extends SimpleViewManager<RNGoogleVRP
     @ReactProp(name = "imageUrl")
     public void setImageUrl(RNGoogleVRPanoramaView view, String imageUrl) {
         view.setImageUrl(imageUrl);
+    }
+
+    @ReactProp(name = "dimensions")
+    public void setDimensions(RNGoogleVRPanoramaView view, ReadableMap dimensions) {
+        int width = dimensions.getInt("width");
+        int height = dimensions.getInt("height");
+        view.setDimensions(width, height);
     }
 
     @ReactProp(name = "inputType")

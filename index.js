@@ -38,6 +38,10 @@ PanoramaView.propTypes = {
   ...View.propTypes,
 
   imageUrl: React.PropTypes.string.isRequired,
+  dimensions: React.PropTypes.shape({
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
+  }),
   inputType: React.PropTypes.number,
 
   onImageLoaded: React.PropTypes.func,
