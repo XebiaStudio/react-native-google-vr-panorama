@@ -3,6 +3,11 @@ React Native component for the Google VR Panorama Widget
 
 **Note: Required Android 4.4 or higher and at least Android SDK Version 23**
 
+## Features
+
+1. Supports `mono` and `stereo` images
+1. Image loading from the internet
+
 ## Installation 
 
 1. NPM install
@@ -90,3 +95,10 @@ render() {
 |---|---|---|---|---|
 | `imageUrl` | `string` | Required | The URL of the image that the component should display | N/A |
 | `inputType` | `number` | Required | The input type for the image. One of `GoogleVRPanorama.inputType.mono`, `GoogleVRPanorama.inputType.stereo` | `GoogleVRPanorama.inputType.mono` |
+
+## Callback methods
+
+| Prop | Properties | Description |
+|---|---|---|---|---|
+| `onImageLoaded` | `undefined` | Fired when the image has successfully loaded |
+| `onImageLoadingFailed` | `undefined` | Fired when the image failed to load |
