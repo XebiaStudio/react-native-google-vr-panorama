@@ -89,12 +89,21 @@ render() {
 }
 ```
 
+### Image dimensions
+
+Due to the constrained system resources that mobile devices have, loading large images as a `Bitmap` can cause out of memory errors.
+
+To prevent OOM errors, supply `dimensions` to the component. When you specify dimensions the component will automatically calculate the sample size and reduce the `Bitmap` size to the exact dimensions.
+
+If not specified, the original image size will be loaded.
+
 ## Props
 
 | Prop | Type | Required | Description | Default |
 |---|---|---|---|---|
 | `imageUrl` | `string` | Required | The URL of the image that the component should display | N/A |
-| `inputType` | `number` | Required | The input type for the image. One of `GoogleVRPanorama.inputType.mono`, `GoogleVRPanorama.inputType.stereo` | `GoogleVRPanorama.inputType.mono` |
+| `dimensions` | `object` | Optional | The dimensions of the image | `{ width: 0, height: 0 }` |
+| `inputType` | `number` | Optional | The input type for the image. One of `GoogleVRPanorama.inputType.mono`, `GoogleVRPanorama.inputType.stereo` | `GoogleVRPanorama.inputType.mono` |
 
 ## Callback methods
 
