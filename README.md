@@ -92,7 +92,7 @@ render() {
 
 ## Example
 
-An example has been provided in [`example/index.android.js`](https://github.com/XebiaStudio/react-native-google-vr-panorama/blob/master/example/example.android.js)
+An example has been provided in [`example/index.android.js`](https://github.com/XebiaStudio/react-native-google-vr-panorama/blob/master/example/index.android.js)
 
 ### Image dimensions
 
