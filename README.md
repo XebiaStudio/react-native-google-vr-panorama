@@ -55,7 +55,7 @@ dependencies {
 }
 ```
 
-1. Add the package to the `getPackages` method in the `MainActivity.java` file:
+1. Add the package to the `getPackages` method in the `MainApplication.java` file:
 
 ```
 import com.xebia.googlevrpanorama.RNGoogleVRPanoramaPackage;
@@ -63,6 +63,7 @@ import com.xebia.googlevrpanorama.RNGoogleVRPanoramaPackage;
 @Override
 protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
+        new MainReactPackage(),
         new RNGoogleVRPanoramaPackage()
     );
 }
@@ -88,6 +89,10 @@ render() {
     )
 }
 ```
+
+## Example
+
+An example has been provided in [`example/index.android.js`](https://github.com/XebiaStudio/react-native-google-vr-panorama/blob/master/example/example.android.js)
 
 ### Image dimensions
 
